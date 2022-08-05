@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt')
 const { response } = require('express')
 var ObjectId = require('mongodb').ObjectId
 const Razorpay = require('razorpay');
+const { resolve } = require('path')
 
 var instance = new Razorpay({
     key_id: 'rzp_test_gH3E6VcBhdvtDA',
@@ -140,7 +141,7 @@ module.exports = {
     getCartCount: (userId) => {
         return new Promise(async (resolve, reject) => {
             let cart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: ObjectId(userId) })
-            if (cart) {
+            if (cart.products.length>0) {
                 let count = await db.get().collection(collection.CART_COLLECTION).aggregate([
                     {
                         $match: { user: ObjectId(userId) }
@@ -209,19 +210,21 @@ module.exports = {
     removeCartProduct: (details) => {
         let productId = details.productId
         let cartId = details.cartId
-        db.get.collection(collection.CART_COLLECTION).updateOne({ _id: ObjectId(cartId) },
-            {
-                $pull: {
-                    products: { item: ObjectId(productId) }
-                }
-            }).then((response) => {
-                reslove(true)
-            })
+       return new Promise((resolve,reject)=>{
+        db.get().collection(collection.CART_COLLECTION).updateOne({ _id: ObjectId(cartId) },
+        {
+            $pull: {
+                products: { item: ObjectId(productId) }
+            }
+        }).then((response)=>{
+            resolve({ status: true })
+        })
+       })
     },
     getTotalAmount: (userId) => {
         return new Promise(async (resolve, reject) => {
             let cart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: ObjectId(userId) })
-            if (cart) {
+            if (cart.products.length>0) {
                 let total = await db.get().collection(collection.CART_COLLECTION).aggregate([
                     {
                         $match: { user: ObjectId(userId) }
@@ -373,14 +376,14 @@ module.exports = {
                 })
         })
     },
-    getRequiredProducts:(category)=>{
-        return new Promise(async(resolve,reject)=>{
+    getRequiredProducts: (category) => {
+        return new Promise(async (resolve, reject) => {
             let products = await db.get().collection(collection.PRODUCT_COLLECTION)
-            .find(
-                {
-                    Category:category
-                }
-            ).toArray()
+                .find(
+                    {
+                        Category: category
+                    }
+                ).toArray()
             resolve(products)
             console.log(products);
         })

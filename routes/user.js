@@ -100,10 +100,10 @@ router.post('/change-product-quantity', (req, res, next) => {
     res.json(response)
   })
 })
-router.get('/remove-product',(req,res)=>{
+router.post('/remove-product',(req,res)=>{
   console.log("Called");
-  userHelpers.removeCartProduct(req.body).then(()=>{
-    res.json({ status: true })
+  userHelpers.removeCartProduct(req.body).then((response)=>{
+    res.json(response)
   })
 })
 router.get('/place-order', verifyLogin, async(req,res)=>{

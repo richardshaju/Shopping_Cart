@@ -24,21 +24,3 @@ function changeQuantity(cartId, productId,userId, count) {
   })
 }
 
-
-
-function removeCartProduct (productId,cartId){
-  $.ajax({
-   url: '/admin/remove-product',
-   data:{
-     productId: productId,
-     cartId : cartId
-     },
-     method:'get',
-     success:(response)=>{
-       if(response.status){
-         location.reload()
-      }
-   }
-  })
- }
- 
