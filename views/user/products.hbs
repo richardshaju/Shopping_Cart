@@ -1,0 +1,169 @@
+{{#if laptop}}
+<section>
+  <div class="  pt-5">
+    <div class="row">
+      {{#each products}}
+      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 pl-4">
+        <div class="card  mb-4 " style="height:18rem;width:25rem">
+          <div class="row">
+            <div class="column">
+              <img class="card-img-top mr-auto " style="width:auto; height: 120px;  padding-left: 20px;
+            padding-top: 15px;" src="/product-images/{{this._id}}.jpg" alt="Card image cap" />
+            </div>
+            <div class="column_2">
+              <h5 class="card-title" style="">{{this.Name}}</h5>
+              <h5 class="card-title" style="font-size: 25px;"> ₹{{this.Price}}</h5>
+            </div>
+            <div class="row">
+            </div>
+          </div>
+          <div class="card-body ">
+            <p class="card-text ">{{this.Description}}</p>
+            {{!-- <a href="/add-to-cart/{{this._id}}" class="btn btn-primary">Add To Cart</a> --}}
+            <div class="text-center">
+              <button class="btn btn-primary " onclick="addToCart('{{this._id}}')">Add To Cart<i style='font-size:15px'
+                  class='fas'>&#xf07a;</i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</section>
+{{else if fashion}}
+<section>
+  <div class="mt-5 ml-5">
+    <div class="row">
+      {{#each products}}
+      <div class="col-6 col-sm-4 col-lg-3">
+        <div class="card" style="">
+          <img src="/product-images/{{this._id}}.jpg" alt="Denim Jeans" style="width:10rem">
+          <h1 style="font-size: 20px;">{{this.Name}}</h1>
+          <p class="price" style=" font-size: 22px;">₹{{this.Price}}</p>
+          <p>{{this.Description}}</p>
+          <div>
+            <p> <button class="btn btn-primary " onclick="addToCart('{{this._id}}')">Add To Cart<i
+                  style='font-size:15px' class='fas'>&#xf07a;</i></button></p>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</section>
+{{else}}
+<section>
+  <div class="  pt-5">
+    <div class="row">
+      {{#each products}}
+      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 pl-4">
+        <div class="card  mb-4 " style="height:18rem;width:23rem">
+          <div class="row">
+            <div class="column">
+              <img class="card-img-top mr-auto" style="width:auto; height: 9rem;  padding-left: 50px;
+            padding-top: 15px;" src="/product-images/{{this._id}}.jpg" alt="Card image cap" />
+            </div>
+            <div class="column_2">
+              <h5 class="card-title" style="">{{this.Name}}</h5>
+              <h5 class="card-title" style="font-size: 25px;"> ₹{{this.Price}}</h5>
+            </div>
+            <div class="row">
+            </div>
+          </div>
+          <div class="card-body ">
+            <p class="card-text ">{{this.Description}}</p>
+            {{!-- <a href="/add-to-cart/{{this._id}}" class="btn btn-primary">Add To Cart</a> --}}
+            <div class="text-center">
+              <button class="btn btn-primary " onclick="addToCart('{{this._id}}')">Add To Cart<i style='font-size:15px'
+                  class='fas'>&#xf07a;</i></button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</section>
+{{/if}}
+
+<script>
+  function addToCart(productId) {
+    $.ajax({
+      url: '/add',
+      method: 'get',
+      success: (response) => {
+        if (response.status) {
+          location.href = '/login'
+        } else {
+          $.ajax({
+            url: '/add-to-cart/' + productId,
+            method: 'get',
+            success: (response) => {
+              if (response.status) {
+                let count = $('#cartCount').html()
+                count = parseInt(count) + 1
+                $("#cartCount").html(count)
+              }
+            }
+          })
+        }
+      }
+    })
+  }
+</script>
+
+<style>
+  .column {
+    float: left;
+    width: 30%;
+  }
+
+  .column_2 {
+    width: 50%;
+    padding: 1px;
+    margin: auto;
+    padding-left: 5px;
+  }
+
+  .row {
+    display: flex;
+  }
+
+  p {
+    margin-top: initial;
+    margin-bottom: initial;
+  }
+
+  .card-fashion {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 200px;
+    height: 20px;
+    margin: auto;
+    text-align: left;
+    font-family: arial;
+  }
+
+
+  .card-fashion button {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 70%;
+    font-size: 18px;
+  }
+
+  .card button:hover {
+    opacity: 0.7;
+  }
+
+  .card {
+    width: 15rem;
+    height: 25rem;
+  }
+</style>

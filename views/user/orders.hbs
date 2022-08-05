@@ -1,0 +1,34 @@
+    <DIV class="CONTAINER">
+        <section>
+            <table class="table mt-5">
+  <thead>
+    <tr>
+      <th scope="col">No</th>
+      <th scope="col">Date & Time</th>
+      <th scope="col">Mobile</th>
+      <th scope="col">Address</th>
+      <th scope="col">Pincode</th>
+      <th scope="col">Payment</th>
+      <th scope="col">Price</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each orders}}
+    <tr>
+      <th scope="row">{{@index}}</th>
+      <td>{{this.date}}
+        {{this.time}}</td>
+      <td>{{this.deliveryDetails.mobile}}</td>
+      <td>{{this.deliveryDetails.address}}</td>
+      <td>{{this.deliveryDetails.pincode}}</td>
+      <td>{{this.paymentMethod}}</td>
+      <td>{{this.totalPrice}}</td>
+      <td>{{this.status}}</td>
+      <td><a class="btn btn-primary" href="/view-order-products/{{this._id}}">View Products</a></td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+        </section>
+    </DIV>

@@ -1,0 +1,67 @@
+<section>
+  <div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="text-center">
+                <h3>Edit Your Products</h3>
+            </div>
+      <form action="/admin/edit-product/{{product._id}}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="Name"
+            placeholder=""
+            value="{{product.Name}}"
+          />
+        <div class="form-group">
+          <label for="">Category</label>
+          <input
+            type=""
+            class="form-control"
+            name="Category"
+            value="{{product.Category}}"
+            
+          />
+          <div class="form-group">
+          <label for="">Price</label>
+          <input
+            type=""
+            class="form-control"
+            name="Price"
+            value="{{product.Price}}"
+            
+          />
+          <div class="form-group">
+          <label for="">Description</label>
+          <input
+            type=""
+            class="form-control"
+            name="Description"
+            value="{{product.Description}}"
+           
+          /> <div class="form-group">
+          <label for="">Current Image</label>
+          <img src="/product-images/{{product._id}}.jpg" alt="" style="width: ;100px;height:100px" id="imgView">
+
+          <div class="form-group">
+          <label for="">Add new Image</label>
+          <input
+            type="file"
+            class="form-control"
+            name="Image"
+            height="40px" width="110px" alt="submit"
+            onchange="viewImage(event)"
+          />
+          <button type="submit" class="btn btn-primary mt-3">Update</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+    function viewImage(event){
+        document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])
+    }
+</script>

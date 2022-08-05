@@ -1,0 +1,67 @@
+<DIV class="CONTAINER">
+  <section>
+    <table class="table mt-5">
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">Date & Time</th>
+          <th scope="col">Mobile</th>
+          <th scope="col">Address</th>
+          <th scope="col">Pincode</th>
+          <th scope="col">Payment</th>
+          <th scope="col">Price</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each orders}}
+        <tr>
+          <th scope="row">{{@index}}</th>
+          <td>{{this.date}}
+            {{this.time}}
+          </td>
+          <td>{{this.deliveryDetails.mobile}}</td>
+          <td>{{this.deliveryDetails.address}}</td>
+          <td>{{this.deliveryDetails.pincode}}</td>
+          <td>{{this.paymentMethod}}</td>
+          <td>{{this.totalPrice}}</td>
+          <td id="{{this._id}}">{{this.status}}</td>
+          <td><a class="btn " href="/view-order-products/{{this._id}}"
+              style="background-color: #6351ce;color: #ffff;">View Products</a></td>
+
+          {{#if this.placed}}
+          <td><button class="btn btn-Success" id="{{this._id}}1"
+              onclick="changeStatus('{{this._id}}','Shipped')">Ship</button></td>
+          {{else}}
+          <td><button class="btn btn-info" id="{{this._id}}1"
+              onclick="changeStatus('{{this._id}}','Delivered')">Delivered</button></td>
+          {{/if}}
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </section>
+</DIV>
+
+<script>
+
+  function changeStatus(orderId,status) {
+    $.ajax({
+      url: '/admin/change-status',
+      data: {
+        orderId: orderId,
+        status: status,
+      },
+      method: 'post',
+      success: (response) => {
+        if (response.status) {
+          document.getElementById(orderId).innerHTML = status
+          document.getElementById(orderId+'1').style.backgroundColor = '#17a2b8'
+          document.getElementById(orderId+'1').innerHTML = 'Delivered'
+          location.reload()
+        }
+      }
+    })
+  }
+
+</script>

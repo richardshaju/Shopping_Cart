@@ -1,0 +1,26 @@
+    <DIV class="CONTAINER">
+        <section>
+            <div class="row mt-4">
+                <a href="admin/add-product"class="btn btn-success ml-auto">Add Products</a>
+            </div>
+            <table class="table mt-5">
+  <thead>
+    <tr>
+      <th scope="col">No</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+  
+  </thead>
+  <tbody>
+    {{#each users}}
+    <tr>
+      <th scope="row">{{@index}}</th>
+      <td>{{this.Name}}</td>
+      <td>{{this.Email}}</td>
+      <td>{{this.Price}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+        </section>
+    </DIV>

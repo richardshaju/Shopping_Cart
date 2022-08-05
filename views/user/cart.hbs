@@ -1,0 +1,58 @@
+ {{#if nullCart}}
+      <h1>{{nullCart}}</h1>
+     {{else}}
+<DIV class="CONTAINER">
+  <section>
+    <div class="row mt-4">
+      <a href="admin/add-product" class="btn btn-success ml-auto">Add Products</a>
+     
+    </div>
+    <table class="table mt-5">
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">Image</th>
+          <th scope="col">Title</th>
+          <th scope="col">Price</th>
+          <th scope="col">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each products}}
+          <tr>
+
+            <th scope="row">{{@index}}</th>
+            <td><img
+                src="/product-images/{{this.products._id}}.jpg"
+                alt=""
+                style="height:4rem"
+              /></td>
+            <td>{{this.products.Name}}</td>
+            <td>Rs.{{this.products.Price}}</td>
+
+            <td><button class="btn btn-warning" onclick="changeQuantity('{{this._id}}','{{this.products._id}}','{{../user._id}}',-1)">-</button>
+                <span id="{{this.products._id}}">{{this.quantity}}</span>
+                <button class="btn btn-warning" onclick="changeQuantity('{{this._id}}','{{this.products._id}}','{{../user._id}}',1)">+</button>
+            </td>
+            <td><a
+                class="btn btn-danger"
+                onclick="removeCartProduct('{{this.products._id}}','{{this._id}}')"
+              >Remove</a></td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    <hr>
+    <div class="float-right pr-5">
+    <h4 class="float-left mr-5">Total Price : Rs. <span id="total">{{total}}</span></h4>
+    <br>
+    <a href="/place-order" class="btn btn-success" style="width: 100%;">Place Order</a>
+    </div>
+  </section>
+</DIV>
+{{/if}}
+<script>
+
+
+
+</script>
