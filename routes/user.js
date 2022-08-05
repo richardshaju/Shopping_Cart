@@ -17,7 +17,7 @@ const verifyLogin = (req, res, next) => {
 
 router.get('/', async function (req, res, next) {
   let user = req.session.user
-  let cartCount = null
+   cartCount = null
   if (req.session.user) {
     cartCount = await userHelpers.getCartCount(req.session.user._id)
   }
@@ -75,10 +75,10 @@ router.get('/cart', verifyLogin, async (req, res) => {
   let products = await userHelpers.getCartProducts(req.session.user._id)
   let total = await userHelpers.getTotalAmount(req.session.user._id)
   if(Number.isInteger(total)){
-    res.render('user/cart', { products, user: req.session.user,total })
+    res.render('user/cart', { products, user: req.session.user,total,cartCount })
   }else{
     let nullCart = total
-    res.render('user/cart', { products, user: req.session.user,nullCart })
+    res.render('user/cart', { products, user: req.session.user,nullCart,cartCount })
   }
 })
 router.get('/add', (req, res,next) => {

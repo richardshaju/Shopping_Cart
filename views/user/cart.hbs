@@ -1,6 +1,39 @@
 {{#if nullCart}}
 <h1>{{nullCart}}</h1>
 {{else}}
+<section>
+
+  <div class="mt-5 container">
+    <div class="row">
+      {{#each products}}
+      <div class="col-12 col-sm-12 col-lg-12 pb-4" style="">
+        <div class="card" style="width:43rem;height:18rem">
+          <div style="width:10rem;height:50rem">
+            <img src="/product-images/{{this.products._id}}.jpg" alt="Denim Jeans" class="mr-auto pl-3 pt-3"
+             style="width:10rem" >
+          </div>
+          <div style="width: 150px;" align="center" class="pl-5 pt-4">
+            <div style="float: left;" class="pr-2">
+              <button class="btn btn-info"
+                onclick="changeQuantity('{{this._id}}','{{this.products._id}}','{{../user._id}}',-1)">-</button>
+            </div>
+            <div style="float: left; font-size: 20px;" class="pr-2">
+              <span id="{{this.products._id}}">{{this.quantity}}</span>
+            </div>
+            <div style="float: left;">
+              <button class="btn btn-info"
+                onclick="changeQuantity('{{this._id}}','{{this.products._id}}','{{../user._id}}',1)">+</button>
+            </div>
+          </div>
+          <h1 style="font-size: 20px;">{{this.Name}}</h1>
+          <p class="price" style=" font-size: 22px;">₹{{this.Price}}</p>
+          <p>{{this.Description}}</p>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</section>
 <DIV class="CONTAINER">
   <section>
     <div class="row mt-4">
@@ -26,11 +59,7 @@
             <td>{{this.products.Name}}</td>
             <td>Rs.{{this.products.Price}}</td>
 
-            <td><button class="btn btn-warning"
-                onclick="changeQuantity('{{this._id}}','{{this.products._id}}','{{../user._id}}',-1)">-</button>
-              <span id="{{this.products._id}}">{{this.quantity}}</span>
-              <button class="btn btn-warning"
-                onclick="changeQuantity('{{this._id}}','{{this.products._id}}','{{../user._id}}',1)">+</button>
+            <td>
             </td>
             <td>
               <a class="btn btn-danger" onclick="removeCartProduct('{{this.products._id}}','{{this._id}}')">Remove</a>
@@ -61,9 +90,9 @@
       method: 'post',
       success: (response) => {
         if (response) {
-          if(confirm("Are you sure to remove this product?")){
-          location.reload()
-        }
+          if (confirm("Are you sure to remove this product?")) {
+            location.reload()
+          }
         }
       }
     })
@@ -72,3 +101,17 @@
 
 
 </script>
+
+<style>
+  .column {
+    float: left;
+    width: 30%;
+  }
+
+  .column_2 {
+    width: 50%;
+    padding: 1px;
+    margin: auto;
+    padding-left: 5px;
+  }
+</style>
