@@ -107,8 +107,8 @@
       method: 'post',
       success: (response) => {
         if (response.removeProduct) {
-          alert("Product Removed")
-          location.reload()
+          document.getElementById("myBtn").disabled = true;
+
         } else {
           try {
             for (i = 0; i < 3; i++) {

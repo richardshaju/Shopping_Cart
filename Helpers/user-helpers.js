@@ -196,12 +196,11 @@ module.exports = {
         details.quantity = parseInt(details.quantity)
         return new Promise((resolve, reject) => {
             if (details.count == -1 && details.quantity == 1) {
-                db.get().collection(collection.CART_COLLECTION).updateOne({ _id: ObjectId(details.cart) },
+                db.get().collection(collection.CART_COLLECTION).updateOne({ _id: ObjectId(details.cart) ,'products.item': ObjectId(details.product) },
                     {
-                        $pull: {
-                            products: { item: ObjectId(details.product) }
-                        }
-                    }).then((response) => {
+                        $inc: { 'products.$.quantity': 0 }
+                    })
+                    .then((response) => {
                         resolve({ removeProduct: true })
                     })
             } else {
@@ -401,8 +400,6 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let cart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: ObjectId(userId) })
             if (cart.products.length > 0) {
-                if (cart.products.quantity > 0) {
-                    
                     let total = await db.get().collection(collection.CART_COLLECTION).aggregate([
                         {
                             $match: { user: ObjectId(userId) }
@@ -440,12 +437,47 @@ module.exports = {
 
                     ]).toArray()
                     resolve(total[0].total)
-                } else{
-                    resolve(0)
-                }
             } else {
                 let value = "No products in Cart"
                 resolve(value)
+            }
+        })
+    },
+    getQuantity: (userId) => {
+        return new Promise(async (resolve, reject) => {
+            let cart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: ObjectId(userId) })
+            if (cart.products.length > 0) {
+                let quantity = await db.get().collection(collection.CART_COLLECTION).aggregate([
+                    {
+                        $match: { user: ObjectId(userId) }
+                    },
+                    {
+                        $unwind: '$products'
+                    },
+                    {
+                        $project: {
+                            item: '$products.item',
+                            quantity: '$products.quantity'
+                        }
+                    },
+                    {
+                        $match: { item: ObjectId(productId) }
+                    },
+                    {
+                        $lookup: {
+                            from: collection.PRODUCT_COLLECTION,
+                            localField: 'item',
+                            foreignField: '_id',
+                            as: 'product'
+                        }
+                    },
+                    {
+                        $project: {
+                            item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+                        }
+                    },
+                ]).toArray()
+                console.log(quantity[0].quantity);
             }
         })
     }

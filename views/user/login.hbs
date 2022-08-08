@@ -1,63 +1,56 @@
-
 <section>
   <div class="container">
-    <div class="row">
-      <div class="col-lg-6 m-auto pt-5">
+    <div class="row" style="    padding-top: 7rem;">
+      <div class="col-12 col-lg-8  m-auto pt-5"
+        style="border: ridge;border-width: thin;box-shadow: 0 5px 38px 0 rgb(0 0 0 / 30%);">
         <h2 class="text-center mb-3 pb-5">Login</h2>
         <form action="/login" method="post" enctype="multipart/form-data" id="login">
-        {{#if loginErr}}
-              <p class="error">{{loginErr}}</p>
-              {{/if}}
+          {{#if loginErr}}
+          <p class="error" style="color: red;"> {{loginErr}}</p>
+          {{/if}}
           <!-- Email input -->
-          <div class="form-outline mb-4">
-            <input type="email" id="form2Example1" class="form-control" name="Email"/>
-            <label class="form-label" for="form2Example2">Email address</label>
+          <div class="form-outline mb-4" style="    padding-left: 4rem;
+    width: 88%;">
+            <input type="email" id="form2Example1" class="form-control" placeholder="Email" name="Email" />
+
           </div>
 
           <!-- Password input -->
-          <div class="form-outline mb-4">
-            <input type="password" id="form2Example2" class="form-control" name="Password"/>
-            <label class="form-label" for="form2Example3">Password</label>
+          <div class="form-outline mb-4" style="    padding-left: 4rem;
+    width: 88%;">
+            <input type="password" id="form2Example2" class="form-control" placeholder="Password" name="Password" />
+
           </div>
 
           <!-- 2 column grid layout for inline styling -->
           <div class="row mb-4">
             <div class="col d-flex justify-content-center">
               <!-- Checkbox -->
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="form2Example31"
-                  checked
-                />
-                <label class="form-check-label" for="form2Example31">
-                  Remember me
-                </label>
-              </div>
-            </div>
-
-            <div class="col">
-              <!-- Simple link -->
-              <a href="#!">Forgot password?</a>
             </div>
           </div>
-
+<div class="row" style="    padding-left: 20rem;">
           <!-- Submit button -->
-          <button type="submit" class="btn btn-primary btn-block mb-4">Log in</button>
-
+          <button type="submit" class="btn btn-primary btn-block mb-4" style="    width: 28%;
+    height: 3rem;">Log in</button>
+</div> 
           <!-- Register buttons -->
           <div class="text-center">
-            <p>Admin Page<a href="admin/login" target="_blank">Login</a></p>
             <p>Not a member? <a href="/signup">Create new account</a></p>
           </div>
         </form>
       </div>
+      
+
     </div>
   </div>
+<div class="row col-12" style="padding-left: 36rem;
+    padding-top: 2rem; ">
+<a type="submit" href="admin/login" class="btn btn-primary btn-block mb-4" style="  background-color: black;width: 28%;
+    height: 3rem;" >ADMIN MODE</a>
+    </div>
 </section>
-//<script>
+
+<script>
 //  $("login").submit((e)=>{
 //        e.preventDefault()
 //        $.ajax({
