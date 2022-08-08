@@ -115,6 +115,11 @@ module.exports = {
                     $project: {
                         item: 1, quantity: 1, products: { $arrayElemAt: ['$product', 0] }
                     }
+                },
+                {
+                    $project: {
+                        item: 1, quantity: 1, products: 1, total: { $multiply: ['$quantity', { $convert: { input: '$products.Price', to: 'int' } }] }
+                    }
                 }
                 //   {
                 //       $lookup: {
@@ -141,43 +146,45 @@ module.exports = {
     getCartCount: (userId) => {
         return new Promise(async (resolve, reject) => {
             let cart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: ObjectId(userId) })
-            if (cart.products.length>0) {
-                let count = await db.get().collection(collection.CART_COLLECTION).aggregate([
-                    {
-                        $match: { user: ObjectId(userId) }
-                    },
-                    {
-                        $unwind: '$products'
-                    },
-                    {
-                        $project: {
-                            item: '$products.item',
-                            quantity: '$products.quantity'
+            if (cart) {
+                if (cart.products.length) {
+                    let count = await db.get().collection(collection.CART_COLLECTION).aggregate([
+                        {
+                            $match: { user: ObjectId(userId) }
+                        },
+                        {
+                            $unwind: '$products'
+                        },
+                        {
+                            $project: {
+                                item: '$products.item',
+                                quantity: '$products.quantity'
+                            }
+                        },
+                        {
+                            $lookup: {
+                                from: collection.PRODUCT_COLLECTION,
+                                localField: 'item',
+                                foreignField: '_id',
+                                as: 'product'
+                            }
+                        },
+                        {
+                            $project: {
+                                item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+                            }
+                        },
+                        {
+                            $group: {
+                                _id: null,
+                                count: { $sum: '$quantity' }
+                            }
                         }
-                    },
-                    {
-                        $lookup: {
-                            from: collection.PRODUCT_COLLECTION,
-                            localField: 'item',
-                            foreignField: '_id',
-                            as: 'product'
-                        }
-                    },
-                    {
-                        $project: {
-                            item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
-                        }
-                    },
-                    {
-                        $group: {
-                            _id: null,
-                            count: { $sum: '$quantity' }
-                        }
-                    }
 
-                ]).toArray()
+                    ]).toArray()
 
-                resolve(count[0].count)
+                    resolve(count[0].count)
+                }
             } else {
                 let count = 0
                 resolve(count)
@@ -210,56 +217,58 @@ module.exports = {
     removeCartProduct: (details) => {
         let productId = details.productId
         let cartId = details.cartId
-       return new Promise((resolve,reject)=>{
-        db.get().collection(collection.CART_COLLECTION).updateOne({ _id: ObjectId(cartId) },
-        {
-            $pull: {
-                products: { item: ObjectId(productId) }
-            }
-        }).then((response)=>{
-            resolve({ status: true })
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.CART_COLLECTION).updateOne({ _id: ObjectId(cartId) },
+                {
+                    $pull: {
+                        products: { item: ObjectId(productId) }
+                    }
+                }).then((response) => {
+                    resolve({ status: true })
+                })
         })
-       })
     },
     getTotalAmount: (userId) => {
         return new Promise(async (resolve, reject) => {
             let cart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: ObjectId(userId) })
-            if (cart.products.length>0) {
-                let total = await db.get().collection(collection.CART_COLLECTION).aggregate([
-                    {
-                        $match: { user: ObjectId(userId) }
-                    },
-                    {
-                        $unwind: '$products'
-                    },
-                    {
-                        $project: {
-                            item: '$products.item',
-                            quantity: '$products.quantity'
+            if (cart) {
+                if (cart.products.length > 0) {
+                    let total = await db.get().collection(collection.CART_COLLECTION).aggregate([
+                        {
+                            $match: { user: ObjectId(userId) }
+                        },
+                        {
+                            $unwind: '$products'
+                        },
+                        {
+                            $project: {
+                                item: '$products.item',
+                                quantity: '$products.quantity'
+                            }
+                        },
+                        {
+                            $lookup: {
+                                from: collection.PRODUCT_COLLECTION,
+                                localField: 'item',
+                                foreignField: '_id',
+                                as: 'product'
+                            }
+                        },
+                        {
+                            $project: {
+                                item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+                            }
+                        },
+                        {
+                            $group: {
+                                _id: null,
+                                total: { $sum: { $multiply: ['$quantity', { $convert: { input: '$product.Price', to: 'int' } }] } }
+                            }
                         }
-                    },
-                    {
-                        $lookup: {
-                            from: collection.PRODUCT_COLLECTION,
-                            localField: 'item',
-                            foreignField: '_id',
-                            as: 'product'
-                        }
-                    },
-                    {
-                        $project: {
-                            item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
-                        }
-                    },
-                    {
-                        $group: {
-                            _id: null,
-                            total: { $sum: { $multiply: ['$quantity', { $convert: { input: '$product.Price', to: 'int' } }] } }
-                        }
-                    }
 
-                ]).toArray()
-                resolve(total[0].total)
+                    ]).toArray()
+                    resolve(total[0].total)
+                }
             } else {
                 let value = "No products in Cart"
                 resolve(value)
@@ -386,6 +395,58 @@ module.exports = {
                 ).toArray()
             resolve(products)
             console.log(products);
+        })
+    },
+    getMultipliedValue: (userId, productId) => {
+        return new Promise(async (resolve, reject) => {
+            let cart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: ObjectId(userId) })
+            if (cart.products.length > 0) {
+                if (cart.products.quantity > 0) {
+                    
+                    let total = await db.get().collection(collection.CART_COLLECTION).aggregate([
+                        {
+                            $match: { user: ObjectId(userId) }
+                        },
+                        {
+                            $unwind: '$products'
+                        },
+                        {
+                            $project: {
+                                item: '$products.item',
+                                quantity: '$products.quantity'
+                            }
+                        },
+                        {
+                            $match: { item: ObjectId(productId) }
+                        },
+                        {
+                            $lookup: {
+                                from: collection.PRODUCT_COLLECTION,
+                                localField: 'item',
+                                foreignField: '_id',
+                                as: 'product'
+                            }
+                        },
+                        {
+                            $project: {
+                                item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+                            }
+                        },
+                        {
+                            $project: {
+                                total: { $multiply: ['$quantity', { $convert: { input: '$product.Price', to: 'int' } }] }
+                            }
+                        }
+
+                    ]).toArray()
+                    resolve(total[0].total)
+                } else{
+                    resolve(0)
+                }
+            } else {
+                let value = "No products in Cart"
+                resolve(value)
+            }
         })
     }
 }
