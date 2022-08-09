@@ -29,22 +29,24 @@ router.get('/', async function (req, res, next) {
 });
 
 router.get('/login', (req, res) => {
+ let  login = true
   if (req.session.user) {
     res.redirect('/')
   } else {
-    res.render('user/login', { "loginErr": req.session.userloginErr, pageName: "Login" })
+    res.render('user/login', { "loginErr": req.session.userloginErr, pageName: "Login" ,login})
     req.session.userloginErr = false
   }
 })
 
 
 router.get('/signup', (req, res) => {
-  res.render('user/signup')
+  let signup = true
+  res.render('user/signup',{signup})
 })
 
 router.post('/signup', (req, res) => {
   userHelpers.doSignup(req.body).then((response) => {
-    req.session.user = response
+    req.session.user = response.user
     req.session.userloggedIn = true
 
     res.redirect('/')
@@ -73,6 +75,7 @@ router.get('/logout', (req, res) => {
 
 router.get('/cart',verifyLogin, async (req, res) => {
   cartCount = null
+  
   if (req.session.user) {
     cartCount = await userHelpers.getCartCount(req.session.user._id)
   }
@@ -85,10 +88,10 @@ router.get('/cart',verifyLogin, async (req, res) => {
     ];
     let today = new Date()
     let date = today.getDate() + ' ' + months[today.getMonth()] + ',' + days[today.getDay()]
-    res.render('user/cart', { products, user: req.session.user, total, cartCount, date })
+    res.render('user/cart', { cart:true,products, user: req.session.user, total, cartCount, date, })
   } else {
     let nullCart = total
-    res.render('user/cart', { products, user: req.session.user, nullCart, cartCount })
+    res.render('user/cart', {cart:true, products, user: req.session.user, nullCart, cartCount})
   }
 })
 router.get('/add', (req, res, next) => {
@@ -171,7 +174,7 @@ router.get('/products/:id', async (req, res) => {
   var laptop = false
   var fashion = false
   let products = await userHelpers.getRequiredProducts(req.params.id)
-  if (req.params.id == "Laptops") {
+  if (req.params.id == "Laptops" || req.params.id == "Appliances") {
     laptop = true
   } else if (req.params.id == "Fashion") {
     fashion = true

@@ -8,55 +8,12 @@
       <span></span>
     </button>
     <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto mb-2 mb-lg-0" >
-       
-        {{#if login}}
-        {{else}}
-        <li class="nav-item ">
-          <a class="nav-link mr-5" href="#products">Products <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item mr-5">
-          <a class="nav-link" href="/cart">Cart <span class="badge badge-info" id="cartCount">{{cartCount}}</span></a>
-        </li>
-        {{#if user}}
-        <li class="nav-item mr-5">
-          <a class="nav-link" href="/orders">Orders</a>
-        </li>
-        {{/if}}
-        <li class="nav-item dropdown">
 
-        <li class="nav-item mr-5">
-          <a class="nav-link " href="#contact">Contact Us</a>
-        </li>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="#about">About</a>
-        </li>
-        
-      </ul>
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown ">
-          <a class="nav-link dropdown-toggle" type="button" href="#" id="dropdownMenuButton" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            {{#if user}}
-            <span style="    padding-right: 6px;"><i class="fa fa-user-circle" style="font-size:24px"></i></span><strong>{{user.Name}}</strong>
-            {{else}}
-            <span><i class="fa fa-user-circle" style="font-size:24px"></i></span> Account
-            {{/if}}
-          </a>
-          <ul class="dropdown-menu " type="button" aria-labelledby="dropdownMenuButton">
-            {{#if user}}
-            <li><a class="dropdown-item" href="/logout">Logout</a></li>
-            {{else}}
-            <li><a class="dropdown-item" href="/login">Login</a></li>
-            {{/if}}
-          </ul>
-        </li>
-      </ul>
-      {{/if}}
+     
     </div>
   </nav>
 </header>
+
 
 <style>
 

@@ -28,27 +28,77 @@
               <!-- Checkbox -->
             </div>
           </div>
-<div class="row" style="    padding-left: 20rem;">
-          <!-- Submit button -->
-          <button type="submit" class="btn btn-primary btn-block mb-4" style="    width: 28%;
-    height: 3rem;">Log in</button>
-</div> 
+          <div class="row row-but" style="">
+            <!-- Submit button -->
+            <button type="submit" class="but btn btn-primary btn-block mb-4" style="">Log in</button>
+          </div>
           <!-- Register buttons -->
           <div class="text-center">
             <p>Not a member? <a href="/signup">Create new account</a></p>
           </div>
         </form>
       </div>
-      
+
 
     </div>
   </div>
-<div class="row col-12" style="padding-left: 36rem;
-    padding-top: 2rem; ">
-<a type="submit" href="admin/login" class="btn btn-primary btn-block mb-4" style="  background-color: black;width: 28%;
-    height: 3rem;" >ADMIN MODE</a>
-    </div>
+  <div class="adrow row col-12" style=" ">
+    <a type="submit" href="admin/login" class="ad btn btn-primary btn-block mb-4" style=" ">ADMIN MODE</a>
+  </div>
 </section>
+<style>
+  .adrow {
+    padding-left: 12rem;
+    padding-top: 1rem;
+
+  }
+
+  @media(min-width:768px) {
+    .adrow {
+      padding-left: 36rem;
+      padding-top: 2rem;
+    }
+  }
+
+  .ad {
+    background-color: black;
+    
+    width: 45%;
+
+  }
+
+  @media(min-width:768px) {
+
+    .ad {
+      background-color: black;
+      width: 28%;
+      height: 3rem;
+    }
+  }
+
+  .row-but {
+    padding-left: 12rem;
+  }
+
+  @media(min-width:768px) {
+    .row-but {
+      padding-left: 20rem;
+    }
+  }
+
+  .but {
+    width: 35%;
+    height: 3rem;
+  }
+
+  @media (min-width:768px) {
+    .but {
+      box-shadow: 0 4px 10px 0 rgb(0 0 0 / 30%);
+      width: 28%;
+      height: 3rem;
+    }
+  }
+</style>
 
 <script>
 //  $("login").submit((e)=>{
