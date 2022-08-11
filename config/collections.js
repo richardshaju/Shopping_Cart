@@ -4,4 +4,5 @@ module.exports = {
     CART_COLLECTION : 'cart',
     ORDER_COLLECTION : 'order',
     ADMIN_COLLECTION : 'admin',
+    CANCELED_ORDERS : 'canceled_orders'
 }

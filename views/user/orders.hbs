@@ -1,34 +1,418 @@
-    <DIV class="CONTAINER">
-        <section>
-            <table class="table mt-5">
-  <thead>
-    <tr>
-      <th scope="col">No</th>
-      <th scope="col">Date & Time</th>
-      <th scope="col">Mobile</th>
-      <th scope="col">Address</th>
-      <th scope="col">Pincode</th>
-      <th scope="col">Payment</th>
-      <th scope="col">Price</th>
-      <th scope="col">Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each orders}}
-    <tr>
-      <th scope="row">{{@index}}</th>
-      <td>{{this.date}}
-        {{this.time}}</td>
-      <td>{{this.deliveryDetails.mobile}}</td>
-      <td>{{this.deliveryDetails.address}}</td>
-      <td>{{this.deliveryDetails.pincode}}</td>
-      <td>{{this.paymentMethod}}</td>
-      <td>{{this.totalPrice}}</td>
-      <td>{{this.status}}</td>
-      <td><a class="btn btn-primary" href="/view-order-products/{{this._id}}">View Products</a></td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
-        </section>
-    </DIV>
+<style>
+  p {
+    margin-bottom: 0.2rem;
+  }
+
+  @media (min-width:768px) {
+    p {
+      margin-bottom: 0.3rem;
+    }
+  }
+
+  .view {
+    padding-bottom: 9rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width:768px) {
+    .view {
+      padding-bottom: 8rem;
+    }
+  }
+
+  .cardbut {
+    font-size: inherit;
+  }
+
+  @media (min-width:768px) {
+    .cardbut {}
+  }
+</style>
+{{#if nullCart}}
+<h1>{{nullCart}}</h1>
+{{else}}
+<div style="background-color:#E5E4E2  ;margin-top: 3rem;">
+  <section class="pt-5 mt-5 ">
+    <div class="mt-5 contnr ">
+      <div class="row" style=" ">
+        {{#each orders}}
+        <div class="col-12 col-lg-6 pb-4 ">
+          <div class="card" style="">
+            <div class="row">
+              <h1 class="title_p" style="color: slategray;">ORDER DETAILS</h1>
+              <hr class="hr">
+              <div class="column">
+                <p>Date : {{this.date}}</p>
+                <p>Time : {{this.time}}</p>
+                <p>Address : {{this.deliveryDetails.address}}</p>
+                <p>Mobile : {{this.deliveryDetails.mobile}}</p>
+                <p>Pincode : {{this.deliveryDetails.pincode}}</p>
+                <p>Payment : {{this.paymentMethod}}</p>
+                <p>Price : ₹{{this.totalPrice}}</p>
+                <strong>
+                  <p>Status : {{this.status}}</p>
+                </strong>
+              </div>
+              <div class="column_2">
+                <div class="view" style="">
+                  <a class=" cardbut btn btn-primary" href="/view-order-products/{{this._id}}">View Products</a>
+                </div>
+                <div class="" style="color:#fff;">
+                  {{#if ../delivered}}
+                  {{else}}
+                  <a class="cardbut btn btn-danger " onclick="cancelOrder('{{this._id}}')">Cancel</a>
+                  {{/if}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+
+    </div>
+
+  </section>
+</div>
+
+{{/if}}
+<script>
+
+  function cancelOrder(orderId) {
+    if (confirm("Are you sure to cancel the current order?")) {
+      $.ajax({
+        url: '/canecl-order',
+        data: {
+          orderId: orderId,
+        },
+        method: 'post',
+        success: (response) => {
+          if (response.status) {
+            location.reload()
+          }
+        }
+      })
+    }
+  }
+
+</script>
+
+<style>
+  .price-row {
+    border: solid;
+    width: 42rem;
+    margin-left: 6rem;
+  }
+
+  .place {
+    padding-left: 60px;
+  }
+
+  @media (min-width:768px) {
+    .place {
+      padding-left: 224px;
+      margin: -45px;
+      padding-top: 11px;
+
+    }
+  }
+
+  .price-details {}
+
+  @media (min-width:768px) {
+    .price-details {}
+  }
+
+  .place-order {
+
+
+    width: 85%;
+    height: 15%;
+    margin: auto;
+  }
+
+  @media (min-width:768px) {
+    .place-order {
+      width: 70%;
+    }
+  }
+
+  .hr2 {
+
+    width: 0;
+
+  }
+
+  @media (min-width:768px) {
+    .hr2 {
+      width: 100%;
+    }
+  }
+
+  .hr {
+    width: 93%;
+  }
+
+  @media (min-width:768px) {
+    .hr {
+      width: 95%;
+      margin: revert;
+    }
+  }
+
+  .txt {
+    font-size: large;
+    padding-left: 25px;
+  }
+
+  @media (min-width:768px) {
+    .txt {}
+  }
+
+  .txt1 {
+    font-size: large;
+    padding-left: 25px;
+
+  }
+
+  @media (min-width:768px) {
+    .txt1 {}
+  }
+
+  .last {}
+
+
+
+  @media (min-width:768px) {
+    .last {
+      padding-right: 27rem;
+    }
+  }
+
+  .LHS_1 {
+    width: 50%;
+    float: left;
+    padding-left: 10px;
+  }
+
+  @media (min-width : 768px) {
+    .LHS_1 {
+      width: 46%;
+      float: left;
+      padding-left: 6rem;
+
+    }
+  }
+
+  .LHS {
+    width: 50%;
+    float: left;
+
+  }
+
+  @media (min-width : 768px) {
+    .LHS {
+      width: 50%;
+      float: left;
+      padding-left: 6rem;
+    }
+  }
+
+  .RHS {
+    width: 50%;
+    float: left;
+    padding-right: 28px;
+  }
+
+  @media (min-width : 768px) {
+    .RHS {
+      width: 50%;
+      float: left;
+    }
+  }
+
+  @media (min-width : 768px) {
+    .price-details {
+      float: left;
+      width: 95%;
+      padding-left: 5px;
+      margin: auto;
+      padding-bottom: 47px;
+    }
+  }
+
+  .column {
+    float: left;
+    width: 60%;
+    padding-left: 25px;
+    margin: auto;
+    padding-bottom: 47px;
+
+  }
+
+  @media (min-width : 768px) {
+    .column {
+      padding: 10px;
+      float: left;
+      width: 60%;
+      padding-left: 25px;
+      margin: auto;
+      padding-bottom: 0px;
+    }
+  }
+
+  .column_2 {
+
+    width: 40%;
+    padding: 1px;
+    margin: auto;
+    padding-right: 82px;
+  }
+
+
+  @media (min-width : 768px) {
+    .column_2 {
+      padding: 10px;
+      float: left;
+      width: 40%;
+    }
+  }
+
+  .card {
+    margin-right: auto;
+    margin-left: auto;
+    height: 309px;
+    width: 449px;
+
+    font-size: 83%
+  }
+
+  @media (min-width : 768px) {
+    .card {
+      display: table-cell;
+      float: none;
+      height: 230px;
+      width: 570px;
+      vertical-align: middle;
+      font-size: 102%;
+    }
+  }
+
+  .image {
+
+    width: 6rem;
+
+  }
+
+  @media (min-width : 768px) {
+    .image {
+      width: 10rem
+    }
+  }
+
+  .imagediv {
+    height: 8rem;
+    margin-bottom: 55px;
+    margin-bottom: -21px;
+  }
+
+  @media (min-width : 768px) {
+    .imagediv {
+      height: 12rem;
+    }
+  }
+
+  .inc {
+    width: 170px;
+    float: left;
+    padding-left: 15px;
+    padding-top: 50px;
+  }
+
+  @media (min-width : 768px) {
+    .inc {
+      width: 170px;
+      float: left;
+      padding-left: 38px;
+    }
+  }
+
+  .remove {
+    padding-left: 10rem;
+    margin: -13px;
+  }
+
+  @media (min-width : 768px) {
+    .remove {
+      padding-left: 22rem;
+    }
+  }
+
+  .contnr {
+    padding-left: 1px;
+  }
+
+  @media (min-width : 768px) {
+    .contnr {
+      padding-left: 4rem;
+    }
+  }
+
+  .title {
+    font-size: 17px;
+  }
+
+  @media (min-width:768) {
+    .title {
+      font-size: 30px;
+
+    }
+  }
+
+  .title_p {
+    font-size: 18px;
+    padding-left: 20px;
+    padding-top: 5px;
+  }
+
+  @media (min-width:768) {
+    .title_p {
+      font-size: 18px;
+      padding-left: 29px;
+      padding-top: 12px;
+    }
+  }
+
+  .butn {
+    height: 30px;
+    width: 31px;
+    text-align: center;
+    line-height: 15px;
+
+  }
+
+  .card_1 {
+    margin-right: auto;
+    margin-left: auto;
+    height: 250px;
+    width: 400px;
+    background-color: #fff;
+    font-size: 83%;
+    vertical-align: middle;
+  }
+
+  @media (min-width : 768px) {
+    .card_1 {
+      margin-right: auto;
+      margin-left: auto;
+      float: none;
+      height: 230px;
+      width: 673px;
+      vertical-align: middle;
+      font-size: 102%;
+      padding-bottom: 14rem;
+      PADDING-TOP: 11PX;
+
+    }
+  }
+</style>

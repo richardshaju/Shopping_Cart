@@ -21,19 +21,17 @@ router.get('/', async function (req, res, next) {
   if (req.session.user) {
     cartCount = await userHelpers.getCartCount(req.session.user._id)
   }
-  productHelper.getAllProducts().then((products) => {
-    let values = ["Mobiles", "Laptops", "Electronics", "Appliances", "Camera", "Home", "Toys", "Fashion", "Shoes", "For Babies", "Books", "Sports"]
-    res.render('./user/index', { products, admin: false, user, cartCount, pageName: "Shopping Cart", values });
-  })
+  let values = ["Mobiles", "Laptops", "Electronics", "Appliances", "Camera", "Home", "Toys", "Fashion", "Shoes", "For Babies", "Books", "Sports"]
+  res.render('./user/index', { admin: false, user, cartCount, pageName: "Shopping Cart", values });
 
 });
 
 router.get('/login', (req, res) => {
- let  login = true
+  let login = true
   if (req.session.user) {
     res.redirect('/')
   } else {
-    res.render('user/login', { "loginErr": req.session.userloginErr, pageName: "Login" ,login})
+    res.render('user/login', { "loginErr": req.session.userloginErr, pageName: "Login", login })
     req.session.userloginErr = false
   }
 })
@@ -41,7 +39,7 @@ router.get('/login', (req, res) => {
 
 router.get('/signup', (req, res) => {
   let signup = true
-  res.render('user/signup',{signup})
+  res.render('user/signup', { signup })
 })
 
 router.post('/signup', (req, res) => {
@@ -73,9 +71,8 @@ router.get('/logout', (req, res) => {
   res.redirect('/')
 })
 
-router.get('/cart',verifyLogin, async (req, res) => {
+router.get('/cart', verifyLogin, async (req, res) => {
   cartCount = null
-  
   if (req.session.user) {
     cartCount = await userHelpers.getCartCount(req.session.user._id)
   }
@@ -88,10 +85,10 @@ router.get('/cart',verifyLogin, async (req, res) => {
     ];
     let today = new Date()
     let date = today.getDate() + ' ' + months[today.getMonth()] + ',' + days[today.getDay()]
-    res.render('user/cart', { cart:true,products, user: req.session.user, total, cartCount, date, })
+    res.render('user/cart', { cart: true, products, user: req.session.user, total, cartCount, date, })
   } else {
     let nullCart = total
-    res.render('user/cart', {cart:true, products, user: req.session.user, nullCart, cartCount})
+    res.render('user/cart', { cart: true, products, user: req.session.user, nullCart, cartCount })
   }
 })
 router.get('/add', (req, res, next) => {
@@ -110,11 +107,11 @@ router.get('/add-to-cart/:id', (req, res) => {
 router.post('/change-product-quantity', (req, res, next) => {
   userHelpers.changeProductQuantity(req.body).then(async (response) => {
     response.total = await userHelpers.getTotalAmount(req.body.userId)
-    response.value = await userHelpers.getMultipliedValue(req.body.userId,req.body.product)
-      console.log(response);
+    response.value = await userHelpers.getMultipliedValue(req.body.userId, req.body.product)
+    console.log(response);
     res.json(response)
   })
-  })
+})
 
 
 router.post('/remove-product', (req, res) => {
@@ -124,8 +121,9 @@ router.post('/remove-product', (req, res) => {
   })
 })
 router.get('/place-order', verifyLogin, async (req, res) => {
+
   let total = await userHelpers.getTotalAmount(req.session.user._id)
-  res.render('user/place-order', { total, user: req.session.user })
+  res.render('user/place-order', { total, user: req.session.user, cart: true })
 
 })
 
@@ -144,11 +142,16 @@ router.post('/place-order', async (req, res) => {
 })
 
 router.get('/order-success', (req, res) => {
-  res.render('user/order-success')
+  res.render('user/order-success', { cart: true })
 })
 router.get('/orders', verifyLogin, async (req, res) => {
   let orders = await userHelpers.getUserOrders(req.session.user._id)
-  res.render('user/orders', { orders, user: req.session.user })
+  if (orders.status == "Delivered") {
+    var delivered = true
+  } else {
+    delivered = false
+  }
+  res.render('user/orders', { orders,delivered, user: req.session.user, order: true })
 })
 router.get('/view-order-products/:id', async (req, res) => {
   let products = await userHelpers.getOrderProducts(req.params.id)
@@ -166,7 +169,6 @@ router.post('/verify-payment', (req, res) => {
   })
 })
 router.get('/products/:id', async (req, res) => {
-  console.log(req.params.id);
   let cartCount = null
   if (req.session.user) {
     cartCount = await userHelpers.getCartCount(req.session.user._id)
@@ -180,5 +182,10 @@ router.get('/products/:id', async (req, res) => {
     fashion = true
   }
   res.render('user/products', { laptop, fashion, products, cartCount, user: req.session.user, admin: false })
+})
+router.post('/canecl-order', async (req, res) => {
+  await userHelpers.cancelOrder(req.body).then((response) => {
+    res.json({ status: true })
+  })
 })
 module.exports = router;

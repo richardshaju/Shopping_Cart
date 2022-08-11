@@ -1,0 +1,127 @@
+<header class="header " style="position: fixed;width: 100%;z-index:2">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+    <a class="navbar-brand" href="/">Cartmax</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0" >
+       
+        
+        <li class="nav-item mr-5">
+          <a class="nav-link" href="/cart">Cart <span class="badge badge-info" id="cartCount">{{cartCount}}</span></a>
+        </li>
+      
+        <li class="nav-item mr-5">
+          <a class="nav-link" href="/orders">Orders</a>
+        </li>
+       
+        <li class="nav-item dropdown">
+
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle" type="button" href="#" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{#if user}}
+            <span style="    padding-right: 6px;"><i class="fa fa-user-circle" style="font-size:24px"></i></span><strong>{{user.Name}}</strong>
+            {{else}}
+            <span><i class="fa fa-user-circle" style="font-size:24px"></i></span> Account
+            {{/if}}
+          </a>
+          <ul class="dropdown-menu " type="button" aria-labelledby="dropdownMenuButton">
+            {{#if user}}
+            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+            {{else}}
+            <li><a class="dropdown-item" href="/login">Login</a></li>
+            {{/if}}
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<style>
+
+  .dropdown-menu{
+    min-width: 8rem;
+        border: 0px solid rgba(0,0,0,.15);
+  }
+  a {
+    text-decoration: none;
+    color: blue;
+    font-weight: 500;
+  }
+
+  a:hover {
+    color: #000;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+  .navbar {
+    background: #fff;
+    padding: 3rem, 2rem;
+    min-height: 10vh;
+    max-height: none;
+  }
+
+  .navbar-brand {
+    font-family: pacifico, sans-serif;
+    font-size: 2.5rem;
+
+  }
+
+  .navbar-toggler {
+    background: rgb(255, 255, 255);
+    border: none;
+    padding: 10px 6px;
+    outline: none;
+  }
+
+  .navbar-toggler span {
+    display: block;
+    width: 25px;
+    height: 2px;
+    border: 1px;
+    background:#000;
+  }
+
+  .navbar-toggler span+span {
+    margin-top: 4px;
+    width: 25px;
+    margin-left: 4px;
+  }
+
+  .navbar-toggler span+span+span {
+
+    width: 25px;
+    margin-left: 10px;
+  }
+
+  .navbar-expand-lg .navbar-nav .nav-link {
+    padding: 0.5rem 1.2rem;
+    font-size: 1.1rem   ;
+    position: relative;
+  }
+
+  .navbar-expand-lg .navbar-nav .nav-link:hover {
+    border-top: 4px solid #000;
+
+  }
+
+  .navbar-expand-lg .navbar-nav .nav-link.active {
+    border-top: 4px solid #000;
+    color: #000;
+  }
+
+  .navbar-nav button {
+    
+  }
+</style>
