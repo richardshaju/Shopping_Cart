@@ -293,12 +293,14 @@ module.exports = {
                 totalPrice: total,
                 products: products,
                 status: status,
-                placed: true
+                placed: true,
+                helper: false
             }
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response) => {
                 db.get().collection(collection.CART_COLLECTION).deleteOne({ user: ObjectId(details.userId) })
                 resolve(response.insertedId)
             })
+
         })
     },
     getCartProductList: (userId) => {
@@ -493,11 +495,22 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             console.log(orderId.orderId);
             let order = await db.get().collection(collection.ORDER_COLLECTION).findOne({ _id: ObjectId(orderId.orderId) })
-                db.get().collection(collection.CANCELED_ORDERS).insertOne(order).then((response)=>{
-                    db.get().collection(collection.ORDER_COLLECTION).deleteOne({ _id: ObjectId(orderId.orderId) })
-                    console.log(response.insertedId);
-                    resolve(response.insertedId)
-                })
+            db.get().collection(collection.CANCELED_ORDERS).insertOne(order).then((response) => {
+                db.get().collection(collection.ORDER_COLLECTION).deleteOne({ _id: ObjectId(orderId.orderId) })
+                console.log(response.insertedId);
+                resolve(response.insertedId)
+            })
+        })
+    },
+    changeOrderHelper: (orderId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.ORDER_COLLECTION).updateOne({ _id: ObjectId(orderId) }, {
+                $set: {
+                    helper: true
+                },
+            }).then(() => {
+                resolve()
+            })
         })
     }
 }

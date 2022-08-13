@@ -1,45 +1,136 @@
-  <header  style="position: fixed;width: 100%;z-index:2">
-      <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #6351ce;">
-        <a
-          class="navbar-brand"
-          href="#"
-          style="font-family: cursive;font-size: x-large;"
-        >Admin Panel </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
+<header class="header " style="position: fixed;width: 100%;z-index:2">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+    <a class="navbar-brand" href="/admin">Admin Panel </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="/admin">All Products
-                <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/admin/orders">All Orders</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/admin/user-list">All Users</a>
-            </li>
-            
+
+        <li class="nav-item ">
+          <a class="nav-link" href="/admin">All Products<span class="sr-only">(current)</span></a>
+
+        </li>
+        <li class="nav-item mr-5">
+          <a class="nav-link" href="/admin/orders">All Orders</a>
+        </li>
+        <li class="nav-item mr-5">
+          <a class="nav-link " href="/admin/canceled-orders/{{admin_id}}">Canceled Orders <span class="badge badge-secondary bg-danger">{{numberOfCancel}}</span></a>
+        </li>
+        <li class="nav-item mr-5">
+          <a class="nav-link" href="/admin/user-list">All Users</a>
+        </li>
+
+
+        <li class="nav-item">
+
+          <a class="nav-link " href="#contact"></a>
+        </li>
+
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle" type="button" href="#" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{#if admin}}
+            <span style="    padding-right: 6px;"><i class="fa fa-user-circle"
+                style="font-size:24px"></i></span><strong>{{admin_name.Name}}</strong>
+            {{else}}
+            <span><i class="fa fa-user-circle" style="font-size:24px"></i></span> Account
+            {{/if}}
+          </a>
+          <ul class="dropdown-menu " type="button" aria-labelledby="dropdownMenuButton">
+            {{#if admin}}
+            <li><a class="dropdown-item" href="/admin/logout">Logout</a></li>
+            {{else}}
+            <li><a class="dropdown-item" href="/admin/login">Login</a></li>
+            {{/if}}
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input
-              class="form-control mr-sm-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-success" type="submit">Search</button>
-          </form>
-        </div>
-      </nav>
-    </header>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<style>
+  .dropdown-menu {
+    min-width: 8rem;
+    border: 0px solid rgba(0, 0, 0, .15);
+  }
+
+  a {
+    text-decoration: none;
+    color: blue;
+    font-weight: 500;
+  }
+
+  a:hover {
+    color: #000;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+  .navbar {
+    background: #fff;
+    padding: 3rem, 2rem;
+    min-height: 10vh;
+    max-height: none;
+  }
+
+  .navbar-brand {
+    font-family: pacifico, sans-serif;
+    font-size: 2.5rem;
+
+  }
+
+  .navbar-toggler {
+    background: rgb(255, 255, 255);
+    border: none;
+    padding: 10px 6px;
+    outline: none;
+  }
+
+  .navbar-toggler span {
+    display: block;
+    width: 25px;
+    height: 2px;
+    border: 1px;
+    background: #000;
+  }
+
+  .navbar-toggler span+span {
+    margin-top: 4px;
+    width: 25px;
+    margin-left: 4px;
+  }
+
+  .navbar-toggler span+span+span {
+
+    width: 25px;
+    margin-left: 10px;
+  }
+
+  .navbar-expand-lg .navbar-nav .nav-link {
+    padding: 0.5rem 1.2rem;
+    font-size: 1.1rem;
+    position: relative;
+  }
+
+  .navbar-expand-lg .navbar-nav .nav-link:hover {
+    border-top: 4px solid #000;
+
+  }
+
+  .navbar-expand-lg .navbar-nav .nav-link.active {
+    border-top: 4px solid #000;
+    color: #000;
+  }
+
+  .navbar-nav button {}
+</style>

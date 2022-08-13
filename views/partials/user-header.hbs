@@ -8,8 +8,8 @@
       <span></span>
     </button>
     <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto mb-2 mb-lg-0" >
-       
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+
         {{#if login}}
         {{else}}
         <li class="nav-item ">
@@ -26,20 +26,22 @@
         <li class="nav-item dropdown">
 
         <li class="nav-item mr-5">
-          <a class="nav-link " href="#contact">Contact Us</a>
+          <a class="nav-link " href="#about">About</a>
         </li>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="#about">About</a>
+
+          <a class="nav-link " href="#contact">Contact Us</a>
         </li>
-        
+
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown ">
           <a class="nav-link dropdown-toggle" type="button" href="#" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             {{#if user}}
-            <span style="    padding-right: 6px;"><i class="fa fa-user-circle" style="font-size:24px"></i></span><strong>{{user.Name}}</strong>
+            <span style="    padding-right: 6px;"><i class="fa fa-user-circle"
+                style="font-size:24px"></i></span><strong>{{user.Name}}</strong>
             {{else}}
             <span><i class="fa fa-user-circle" style="font-size:24px"></i></span> Account
             {{/if}}
@@ -59,11 +61,11 @@
 </header>
 
 <style>
-
-  .dropdown-menu{
+  .dropdown-menu {
     min-width: 8rem;
-        border: 0px solid rgba(0,0,0,.15);
+    border: 0px solid rgba(0, 0, 0, .15);
   }
+
   a {
     text-decoration: none;
     color: blue;
@@ -103,7 +105,7 @@
     width: 25px;
     height: 2px;
     border: 1px;
-    background:#000;
+    background: #000;
   }
 
   .navbar-toggler span+span {
@@ -120,7 +122,7 @@
 
   .navbar-expand-lg .navbar-nav .nav-link {
     padding: 0.5rem 1.2rem;
-    font-size: 1.1rem   ;
+    font-size: 1.1rem;
     position: relative;
   }
 
@@ -134,7 +136,5 @@
     color: #000;
   }
 
-  .navbar-nav button {
-    
-  }
+  .navbar-nav button {}
 </style>

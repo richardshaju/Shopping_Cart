@@ -1,0 +1,39 @@
+<DIV class="CONTAINER pt-5 mt-5">
+  <section>
+    <h1>{{numberOfCancel}}</h1>
+    <table class="table mt-5 table-responsive">
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">Date & Time</th>
+          <th scope="col">Mobile</th>
+          <th scope="col">Address</th>
+          <th scope="col">Pincode</th>
+          <th scope="col">Payment</th>
+          <th scope="col">Price</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each orders}}
+
+        
+        <tr>
+          <th scope="row" >{{@index}}</th>
+          <td>{{this.date}}
+            {{this.time}}
+          </td>
+          <td>{{this.deliveryDetails.mobile}}</td>
+          <td>{{this.deliveryDetails.address}}</td>
+          <td>{{this.deliveryDetails.pincode}}</td>
+          <td>{{this.paymentMethod}}</td>
+          <td>{{this.totalPrice}}</td>
+          <td id="{{this._id}}" style="color: red;"  >Canceled</td>
+          <td><a class="btn " href="/view-order-products/{{this._id}}"
+              style="background-color: #6351ce;color: #ffff;">View Products</a></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </section>
+</DIV>

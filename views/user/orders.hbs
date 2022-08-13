@@ -35,6 +35,7 @@
   <section class="pt-5 mt-5 ">
     <div class="mt-5 contnr ">
       <div class="row" style=" ">
+        {{#if orders}}
         {{#each orders}}
         <div class="col-12 col-lg-6 pb-4 ">
           <div class="card" style="">
@@ -58,9 +59,10 @@
                   <a class=" cardbut btn btn-primary" href="/view-order-products/{{this._id}}">View Products</a>
                 </div>
                 <div class="" style="color:#fff;">
-                  {{#if ../delivered}}
+                  {{#if this.placed}}
+                   <a class="cardbut btn btn-danger " onclick="cancelOrder('{{this._id}}')">Cancel</a>
                   {{else}}
-                  <a class="cardbut btn btn-danger " onclick="cancelOrder('{{this._id}}')">Cancel</a>
+                  
                   {{/if}}
                 </div>
               </div>
@@ -68,6 +70,9 @@
           </div>
         </div>
         {{/each}}
+        {{else}}
+        <h1>No Orders</h1>
+        {{/if}}
       </div>
 
     </div>
@@ -81,7 +86,7 @@
   function cancelOrder(orderId) {
     if (confirm("Are you sure to cancel the current order?")) {
       $.ajax({
-        url: '/canecl-order',
+        url: '/cancel-order',
         data: {
           orderId: orderId,
         },

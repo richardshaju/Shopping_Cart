@@ -1,5 +1,6 @@
 var express = require('express');
 const { response } = require('../app');
+const adminHelpers = require('../Helpers/admin-helpers');
 var router = express.Router();
 var productHelper = require('../Helpers/product-helpers');
 const userHelpers = require('../Helpers/user-helpers');
@@ -46,7 +47,6 @@ router.post('/signup', (req, res) => {
   userHelpers.doSignup(req.body).then((response) => {
     req.session.user = response.user
     req.session.userloggedIn = true
-
     res.redirect('/')
   })
 })
@@ -56,7 +56,6 @@ router.post('/login', (req, res) => {
     if (response.status) {
       req.session.user = response.user
       req.session.userloggedIn = true
-
       res.redirect('/')
     } else {
       req.session.userloginErr = "Invalid username or password"
@@ -144,15 +143,14 @@ router.post('/place-order', async (req, res) => {
 router.get('/order-success', (req, res) => {
   res.render('user/order-success', { cart: true })
 })
+
 router.get('/orders', verifyLogin, async (req, res) => {
-  let orders = await userHelpers.getUserOrders(req.session.user._id)
-  if (orders.status == "Delivered") {
-    var delivered = true
-  } else {
-    delivered = false
-  }
-  res.render('user/orders', { orders,delivered, user: req.session.user, order: true })
+  await userHelpers.getUserOrders(req.session.user._id).then((orders) => {
+    res.render('user/orders', { orders, user: req.session.user, order: true })
+  })
+
 })
+
 router.get('/view-order-products/:id', async (req, res) => {
   let products = await userHelpers.getOrderProducts(req.params.id)
   res.render('user/view-order-products', { products, user: req.session.user })
@@ -183,9 +181,10 @@ router.get('/products/:id', async (req, res) => {
   }
   res.render('user/products', { laptop, fashion, products, cartCount, user: req.session.user, admin: false })
 })
-router.post('/canecl-order', async (req, res) => {
-  await userHelpers.cancelOrder(req.body).then((response) => {
-    res.json({ status: true })
+router.post('/cancel-order' , async (req, res) => {
+    await userHelpers.cancelOrder(req.body).then( (response)=>{
+       res.json({ status: true })
   })
+ 
 })
 module.exports = router;
