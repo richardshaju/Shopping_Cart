@@ -18,12 +18,14 @@ const verifyLogin = (req, res, next) => {
 
 router.get('/', async function (req, res, next) {
   let user = req.session.user
-  cartCount = null
-  if (req.session.user) {
-    cartCount = await userHelpers.getCartCount(req.session.user._id)
+  let cartCount = null
+  if (user) {
+    cartCount = await userHelpers.getCartCount(user._id)
+  } else {
   }
   let values = ["Mobiles", "Laptops", "Electronics", "Appliances", "Camera", "Home", "Toys", "Fashion", "Shoes", "For Babies", "Books", "Sports"]
   res.render('./user/index', { admin: false, user, cartCount, pageName: "Shopping Cart", values });
+  //console.log(values.slice(0,1))
 
 });
 
@@ -71,12 +73,10 @@ router.get('/logout', (req, res) => {
 })
 
 router.get('/cart', verifyLogin, async (req, res) => {
-  cartCount = null
-  if (req.session.user) {
-    cartCount = await userHelpers.getCartCount(req.session.user._id)
-  }
   let products = await userHelpers.getCartProducts(req.session.user._id)
-  let total = await userHelpers.getTotalAmount(req.session.user._id)
+  console.log(products);
+  var total = await userHelpers.getTotalAmount(req.session.user._id)
+  console.log(total);
   if (Number.isInteger(total)) {
     var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     var months = ["Jan", "Feb", "Mar", "Apr", "May", "June",
@@ -84,10 +84,11 @@ router.get('/cart', verifyLogin, async (req, res) => {
     ];
     let today = new Date()
     let date = today.getDate() + ' ' + months[today.getMonth()] + ',' + days[today.getDay()]
-    res.render('user/cart', { cart: true, products, user: req.session.user, total, cartCount, date, })
-  } else {
+    res.render('user/cart', { cart: true, products, user: req.session.user, total, date, })
+  } 
+  else {
     let nullCart = total
-    res.render('user/cart', { cart: true, products, user: req.session.user, nullCart, cartCount })
+    res.render('user/cart', { cart: true, user: req.session.user, nullCart })
   }
 })
 router.get('/add', (req, res, next) => {
@@ -181,10 +182,10 @@ router.get('/products/:id', async (req, res) => {
   }
   res.render('user/products', { laptop, fashion, products, cartCount, user: req.session.user, admin: false })
 })
-router.post('/cancel-order' , async (req, res) => {
-    await userHelpers.cancelOrder(req.body).then( (response)=>{
-       res.json({ status: true })
+router.post('/cancel-order', async (req, res) => {
+  await userHelpers.cancelOrder(req.body).then((response) => {
+    res.json({ status: true })
   })
- 
+
 })
 module.exports = router;

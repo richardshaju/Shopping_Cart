@@ -1,9 +1,14 @@
 {{#if nullCart}}
-<h1>{{nullCart}}</h1>
+ <div class="container  mt-5" style="padding-top: 15rem; padding-bottom: 16rem;" >
+    <div class="col-md-12 text-center">
+         <h2>No products in Cart</h2>
+         <br>
+    </div>
+</div> 
 {{else}}
 <div style="background-color:#E5E4E2  ;margin-top: 3rem;">
-  <section class="pt-5 mt-5 " >
-    <div class="mt-5 contnr " >
+  <section class="pt-5 mt-5 ">
+    <div class="mt-5 contnr ">
       <div class="row" style=" ">
         {{#each products }}
         <div class="col-sm-12 col-lg-12 pb-4 ">
@@ -60,7 +65,7 @@
                   <hr class="hr2">
                 </div>
                 <div class="RHS">
-                  <h5 class="txt1" >₹<span id="total">{{total}}</span></h5>
+                  <h5 class="txt1">₹<span id="total">{{total}}</span></h5>
                   <h5 class="txt1">₹00</h5>
                   <h5 class="txt1" style="color: green;">FREE</h5>
                   <hr>
@@ -69,7 +74,7 @@
                   <h1 class="title_p" style="padding-left: 1rem;">Grand Total</h1>
                 </div>
                 <div class="RHS">
-                  <h1 class="title_p" style="padding-left: 1rem; color: red;">₹<span  id="total_2"> {{total}}</span></h1>
+                  <h1 class="title_p" style="padding-left: 1rem; color: red;">₹<span id="total_2"> {{total}}</span></h1>
                   <div class="place">
                     <a href="/place-order" class="place-order btn btn-success">Place Order</a>
                   </div>
@@ -85,11 +90,22 @@
     </div>
 </div>
 </div>
-
 </section>
 </div>
-
 {{/if}}
+<footer >
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+    &copy;
+    <script type="text/javascript">
+      var today = new Date()
+      var year = today.getFullYear()
+      document.write(year)
+    </script>
+    <a class="text-black">CARTMAX</a>
+  </div>
+</footer>
+
 <script>
 
   function changeQuantity(cartId, productId, userId, count) {

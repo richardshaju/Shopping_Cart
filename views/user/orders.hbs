@@ -29,7 +29,7 @@
   }
 </style>
 {{#if nullCart}}
-<h1>{{nullCart}}</h1>
+<h1 style="padding-bottom: 16rem;">{{nullCart}}</h1>
 {{else}}
 <div style="background-color:#E5E4E2  ;margin-top: 3rem;">
   <section class="pt-5 mt-5 ">
@@ -79,8 +79,19 @@
 
   </section>
 </div>
-
 {{/if}}
+<footer >
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+    &copy;
+    <script type="text/javascript">
+      var today = new Date()
+      var year = today.getFullYear()
+      document.write(year)
+    </script>
+    <a class="text-black">CARTMAX</a>
+  </div>
+</footer>
 <script>
 
   function cancelOrder(orderId) {

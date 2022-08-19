@@ -91,64 +91,75 @@ module.exports = {
     },
     getCartProducts: (userId) => {
         return new Promise(async (resolve, reject) => {
-            let cartItems = await db.get().collection(collection.CART_COLLECTION).aggregate([
-                {
-                    $match: { user: ObjectId(userId) }
-                },
-                {
-                    $unwind: '$products'
-                },
-                {
-                    $project: {
-                        item: '$products.item',
-                        quantity: '$products.quantity'
-                    }
-                },
-                {
-                    $lookup: {
-                        from: collection.PRODUCT_COLLECTION,
-                        localField: 'item',
-                        foreignField: '_id',
-                        as: 'product'
-                    }
-                },
-                {
-                    $project: {
-                        item: 1, quantity: 1, products: { $arrayElemAt: ['$product', 0] }
-                    }
-                },
-                {
-                    $project: {
-                        item: 1, quantity: 1, products: 1, total: { $multiply: ['$quantity', { $convert: { input: '$products.Price', to: 'int' } }] }
-                    }
-                }
-                //   {
-                //       $lookup: {
-                //           from: collection.PRODUCT_COLLECTION,
-                //           let: { proList: '$products' },
-                //           pipeline: [
-                //               {
-                //                   $match: {
-                //                       $expr: {
-                //                           $in:['$_id',"$$proList"]
-                //                       }
-                //                   }
-                //               }
-                //           ],
-                //           as:'cartItems'
-                //       }
-                //   }
-            ]).toArray()
-            //console.log(cartItems[0].products);
-            resolve(cartItems)
+            let cart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: ObjectId(userId) })
+            if (cart) {
+                if (cart.products.length > 0) {
+                    let cartItems = await db.get().collection(collection.CART_COLLECTION).aggregate([
+                        {
+                            $match: { user: ObjectId(userId) }
+                        },
+                        {
+                            $unwind: '$products'
+                        },
+                        {
+                            $project: {
+                                item: '$products.item',
+                                quantity: '$products.quantity'
+                            }
+                        },
+                        {
+                            $lookup: {
+                                from: collection.PRODUCT_COLLECTION,
+                                localField: 'item',
+                                foreignField: '_id',
+                                as: 'product'
+                            }
+                        },
+                        {
+                            $project: {
+                                item: 1, quantity: 1, products: { $arrayElemAt: ['$product', 0] }
+                            }
+                        },
+                        {
+                            $project: {
+                                item: 1, quantity: 1, products: 1, total: { $multiply: ['$quantity', { $convert: { input: '$products.Price', to: 'int' } }] }
+                            }
+                        }
+                        //   {
+                        //       $lookup: {
+                        //           from: collection.PRODUCT_COLLECTION,
+                        //           let: { proList: '$products' },
+                        //           pipeline: [
+                        //               {
+                        //                   $match: {
+                        //                       $expr: {
+                        //                           $in:['$_id',"$$proList"]
+                        //                       }
+                        //                   }
+                        //               }
+                        //           ],
+                        //           as:'cartItems'
+                        //       }
+                        //   }
+                    ]).toArray()
+                    //console.log(cartItems[0].products);
+                    resolve(cartItems)
 
+                } else {
+                    let value = "No products in Cart"
+                    resolve(value)
+                }
+            } else {
+                let value = "No products in Cart"
+                resolve(value)
+            }
         })
     },
     getCartCount: (userId) => {
         return new Promise(async (resolve, reject) => {
             let cart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: ObjectId(userId) })
             if (cart) {
-                if (cart.products.length) {
+                if (cart.products.length > 0) {
                     let count = await db.get().collection(collection.CART_COLLECTION).aggregate([
                         {
                             $match: { user: ObjectId(userId) }
@@ -181,10 +192,13 @@ module.exports = {
                                 count: { $sum: '$quantity' }
                             }
                         }
-
                     ]).toArray()
-
                     resolve(count[0].count)
+                    
+                }
+                else {
+                    let count = 0
+                    resolve(count)
                 }
             } else {
                 let count = 0
@@ -268,6 +282,9 @@ module.exports = {
 
                     ]).toArray()
                     resolve(total[0].total)
+                }else{
+                    let value = "No products in Cart"
+                    resolve(value)
                 }
             } else {
                 let value = "No products in Cart"
