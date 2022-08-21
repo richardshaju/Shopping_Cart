@@ -1,17 +1,24 @@
-<section class="pt-5 mt-5">
-  <div class="container ml-5 mt-5" >
+<section class="">
+  <div class="  pt-5 mt-5">
     <div class="row">
       {{#each products}}
-      <div class="col-md-3 ">
-        <div class="card" style="height:20rem;" "width:30rem">
-          <div style="max-width:100%; height:auto;">
-            <img class="card-img-top" src="/product-images/{{this.product._id}}.jpg" alt="Card image cap" />
+      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 pl-4">
+        <div class="card  mb-4 " style="height:18rem;width:25rem">
+          <div class="row">
+            <div class="column">
+              <img class="card-img-top mr-auto " style="width:auto; height: 120px;  padding-left: 20px;
+            padding-top: 15px;" src="/product-images/{{this.product._id}}.jpg" alt="Card image cap" />
+            </div>
+            <div class="column_2">
+              <h5 class="card-title" style="">{{this.product.Name}}</h5>
+              <h5 class="card-title" style="font-size: 25px;  padding-left: 23px;"> ₹{{this.product.Price}}</h5>
+            </div>
+            <div class="row">
+            </div>
           </div>
-          <div class="card-body">
-            <h5 class="card-title">{{this.product.Name}}</h5>
-            <h5 class="card-title">Price : Rs.{{this.product.Price}}</h5>
-            <p class="card-text">Quantity : {{this.quantity}}</p>
-            
+          <div class="card-body ">
+            <p class="card-text ">{{this.product.Description}}</p>
+            {{!-- <a href="/add-to-cart/{{this._id}}" class="btn btn-primary">Add To Cart</a> --}}
           </div>
         </div>
       </div>
@@ -19,6 +26,7 @@
     </div>
   </div>
 </section>
+
 <footer >
   <!-- Copyright -->
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
@@ -31,3 +39,56 @@
     <a class="text-black">CARTMAX</a>
   </div>
 </footer>
+<style>
+  .column {
+    float: left;
+    width: 30%;
+  }
+
+  .column_2 {
+    width: 50%;
+    padding: 1px;
+    margin: auto;
+    padding-left: 5px;
+  }
+
+  .row {
+    display: flex;
+  }
+
+  p {
+    margin-top: initial;
+    margin-bottom: initial;
+  }
+
+  .card-fashion {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 200px;
+    height: 20px;
+    margin: auto;
+    text-align: left;
+    font-family: arial;
+  }
+
+
+  .card-fashion button {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 70%;
+    font-size: 18px;
+  }
+
+  .card button:hover {
+    opacity: 0.7;
+  }
+
+  .card {
+    width: 15rem;
+    height: 25rem;
+  }
+</style>

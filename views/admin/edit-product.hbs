@@ -1,4 +1,4 @@
-<section>
+<section style="padding-top: 90px;">
   <div class="container">
     <div class="row">
         <div class="col-md-6">
@@ -13,7 +13,9 @@
             class="form-control"
             name="Name"
             placeholder=""
+            maxlength="52"
             value="{{product.Name}}"
+            required
           />
         <div class="form-group">
           <label for="">Category</label>
@@ -22,6 +24,7 @@
             class="form-control"
             name="Category"
             value="{{product.Category}}"
+            required
             
           />
           <div class="form-group">
@@ -31,7 +34,7 @@
             class="form-control"
             name="Price"
             value="{{product.Price}}"
-            
+            required
           />
           <div class="form-group">
           <label for="">Description</label>
@@ -40,7 +43,8 @@
             class="form-control"
             name="Description"
             value="{{product.Description}}"
-           
+            maxlength="123"
+           required
           /> <div class="form-group">
           <label for="">Current Image</label>
           <img src="/product-images/{{product._id}}.jpg" alt="" style="width: ;100px;height:100px" id="imgView">
@@ -53,6 +57,7 @@
             name="Image"
             height="40px" width="110px" alt="submit"
             onchange="viewImage(event)"
+           
           />
           <button type="submit" class="btn btn-primary mt-3">Update</button>
       </form>

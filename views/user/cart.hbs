@@ -1,10 +1,10 @@
 {{#if nullCart}}
- <div class="container  mt-5" style="padding-top: 15rem; padding-bottom: 16rem;" >
-    <div class="col-md-12 text-center">
-         <h2>No products in Cart</h2>
-         <br>
-    </div>
-</div> 
+<div class="container  mt-5" style="padding-top: 15rem; padding-bottom: 16rem;">
+  <div class="col-md-12 text-center">
+    <h2>No products in Cart</h2>
+    <br>
+  </div>
+</div>
 {{else}}
 <div style="background-color:#E5E4E2  ;margin-top: 3rem;">
   <section class="pt-5 mt-5 ">
@@ -14,24 +14,10 @@
         <div class="col-sm-12 col-lg-12 pb-4 ">
           <div class="card" style="">
             <div class="row">
-              <div class="column">
+              <div class="column" style="padding-bottom: 86px;">
                 <div class="imagediv">
                   <img src="/product-images/{{this.products._id}}.jpg" alt="Denim Jeans"
-                    class="image  mr-auto pl-3 pt-3" style="">
-                </div>
-                <div align="center" class=" inc ">
-                  <div style="float: left;" class="pr-2">
-                    <button class="butn btn btn-info"
-                      onclick="changeQuantity('{{this._id}}','{{this.products._id}}','{{../user._id}}',-1)">-</button>
-                  </div>
-                  <div style="float: left; font-size: 20px;" class="pr-2">
-                    <span class="{{this.products._id}}">{{this.quantity}}</span>
-                  </div>
-                  <div style="float: left;">
-                    <button class="butn btn btn-info btn-responsive"
-                      onclick="changeQuantity('{{this._id}}','{{this.products._id}}','{{../user._id}}',1)">+</button>
-                  </div>
-
+                    class="image  mr-auto pl-3 pt-3" style="color: ;">
                 </div>
               </div>
               <div class="column_2">
@@ -40,6 +26,20 @@
                 <p>Quantity : <span class="{{this.products._id}}">{{this.quantity}}</span></p>
                 <p> <strong> Delivery by {{../date}}</strong></p>
                 <h2 style="font-size: 20px;">₹<span id="{{this.products._id}}">{{this.total}}</span></h2>
+                <div align="center" class=" inc ">
+                  <div style="float: left;" class="pr-2">
+                    <button class="butn btn btn-responsive bg-dark text-white"
+                      onclick="changeQuantity('{{this._id}}','{{this.products._id}}','{{../user._id}}',-1)">-</button>
+                  </div>
+                  <div style="float: left; font-size: 20px;" class="pr-2">
+                    <span class="{{this.products._id}}">{{this.quantity}}</span>
+                  </div>
+                  <div style="float: left;">
+                    <button class="butn btn  btn-responsive bg-dark text-white"
+                      onclick="changeQuantity('{{this._id}}','{{this.products._id}}','{{../user._id}}',1)">+</button>
+                  </div>
+
+                </div>
                 <div class="remove" style="">
                   <a class=" btn btn-danger "
                     onclick="removeCartProduct('{{this.products._id}}','{{this._id}}')">Remove</a>
@@ -93,7 +93,7 @@
 </section>
 </div>
 {{/if}}
-<footer >
+<footer>
   <!-- Copyright -->
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
     &copy;
@@ -446,7 +446,7 @@
     width: 31px;
     text-align: center;
     line-height: 15px;
-
+    color: black;
   }
 
   .card_1 {

@@ -19,7 +19,7 @@
           <a class="nav-link" href="/admin/orders">All Orders</a>
         </li>
         <li class="nav-item mr-5">
-          <a class="nav-link " href="/admin/canceled-orders/{{admin_id}}">Canceled Orders <span class="badge badge-secondary bg-danger">{{numberOfCancel}}</span></a>
+          <a class="nav-link " href="/admin/canceled-orders">Canceled Orders {{#if numberOfCancel}}<span class="badge badge-secondary bg-danger">{{numberOfCancel}}</span>{{/if}}</a>
         </li>
         <li class="nav-item mr-5">
           <a class="nav-link" href="/admin/user-list">All Users</a>

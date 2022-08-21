@@ -24,7 +24,7 @@ router.get('/', async function (req, res, next) {
   } else {
   }
   let values = ["Mobiles", "Laptops", "Electronics", "Appliances", "Camera", "Home", "Toys", "Fashion", "Shoes", "For Babies", "Books", "Sports"]
-  res.render('./user/index', { admin: false, user, cartCount, pageName: "Shopping Cart", values });
+  res.render('./user/index', { admin: false, user, cartCount, pageName: "Cartmax", values });
   //console.log(values.slice(0,1))
 
 });
@@ -42,7 +42,7 @@ router.get('/login', (req, res) => {
 
 router.get('/signup', (req, res) => {
   let signup = true
-  res.render('user/signup', { signup })
+  res.render('user/signup', { signup , pageName: "Signup"})
 })
 
 router.post('/signup', (req, res) => {
@@ -77,6 +77,8 @@ router.get('/cart', verifyLogin, async (req, res) => {
   console.log(products);
   var total = await userHelpers.getTotalAmount(req.session.user._id)
   console.log(total);
+  var mobiles = false
+ 
   if (Number.isInteger(total)) {
     var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     var months = ["Jan", "Feb", "Mar", "Apr", "May", "June",
@@ -84,11 +86,11 @@ router.get('/cart', verifyLogin, async (req, res) => {
     ];
     let today = new Date()
     let date = today.getDate() + ' ' + months[today.getMonth()] + ',' + days[today.getDay()]
-    res.render('user/cart', { cart: true, products, user: req.session.user, total, date, })
+    res.render('user/cart', { cart: true, products, user: req.session.user, total, date, pageName: "Cart"})
   } 
   else {
     let nullCart = total
-    res.render('user/cart', { cart: true, user: req.session.user, nullCart })
+    res.render('user/cart', { cart: true, user: req.session.user, nullCart, pageName: "Cart" })
   }
 })
 router.get('/add', (req, res, next) => {
@@ -123,7 +125,7 @@ router.post('/remove-product', (req, res) => {
 router.get('/place-order', verifyLogin, async (req, res) => {
 
   let total = await userHelpers.getTotalAmount(req.session.user._id)
-  res.render('user/place-order', { total, user: req.session.user, cart: true })
+  res.render('user/place-order', { total, user: req.session.user, cart: true, pageName: "Place Order" })
 
 })
 
@@ -142,19 +144,19 @@ router.post('/place-order', async (req, res) => {
 })
 
 router.get('/order-success', (req, res) => {
-  res.render('user/order-success', { cart: true })
+  res.render('user/order-success', { cart: true, pageName: "Order Success"})
 })
 
 router.get('/orders', verifyLogin, async (req, res) => {
   await userHelpers.getUserOrders(req.session.user._id).then((orders) => {
-    res.render('user/orders', { orders, user: req.session.user, order: true })
+    res.render('user/orders', { orders, user: req.session.user, order: true , pageName: "Orders"})
   })
 
 })
 
 router.get('/view-order-products/:id', async (req, res) => {
   let products = await userHelpers.getOrderProducts(req.params.id)
-  res.render('user/view-order-products', { products, user: req.session.user })
+  res.render('user/view-order-products', { products, user: req.session.user ,pageName: "Ordered Products" })
 })
 router.post('/verify-payment', (req, res) => {
   console.log(req.body);
@@ -175,12 +177,12 @@ router.get('/products/:id', async (req, res) => {
   var laptop = false
   var fashion = false
   let products = await userHelpers.getRequiredProducts(req.params.id)
-  if (req.params.id == "Laptops" || req.params.id == "Appliances") {
+  if (req.params.id == "Laptops" || req.params.id == "Appliances" || req.params.id == "Camera"|| req.params.id == "Toys")  {
     laptop = true
   } else if (req.params.id == "Fashion") {
     fashion = true
   }
-  res.render('user/products', { laptop, fashion, products, cartCount, user: req.session.user, admin: false })
+  res.render('user/products', { laptop, fashion, products, cartCount, user: req.session.user, admin: false, pageName: "Products" })
 })
 router.post('/cancel-order', async (req, res) => {
   await userHelpers.cancelOrder(req.body).then((response) => {

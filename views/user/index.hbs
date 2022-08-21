@@ -9,6 +9,14 @@
   .details {
     font-size: 12px;
   }
+    .zoom:hover {
+    -ms-transform: scale(1.02);
+    /* IE 9 */
+    -webkit-transform: scale(1.02);
+    /* Safari 3-8 */
+    transform: scale(1.02);
+       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8)
+  }
 </style>
 <section class="pt-5 mt-5">
   <div id="carouselExampleIndicators" style="height:auto;width: auto;" class="carousel slide" data-ride="carousel">
@@ -19,17 +27,14 @@
     </ol>
     <div class="carousel-inner ">
       <div class="carousel-item active">
-        <a
-          href="https://www.amazon.in/b?node=27063338031&pf_rd_r=3W1K196YHZZYTM9GBX81&pf_rd_p=4159da0a-35f5-4fcb-8d73-86611a288072&pd_rd_r=c5eb42f6-528e-4093-a85e-a9fdf555c26c&pd_rd_w=T9mvw&pd_rd_wg=u4Zpa&ref_=pd_gw_unk"><img
-            class="d-block w-100 img-fluid " style="height:auto;width: auto;" src="/images/slide-show_1.jpg"
-            alt="First slide"></a>
+        <a href="/products/Books"><img class="d-block w-100 img-fluid " style="height:auto;width: auto;"
+            src="/images/slide-show_3.jpg" alt="First slide"></a>
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100" style="height:auto;width: auto;" href="" src="/images/slide-show_2.jpg"
-          alt="Second slide">
-      </div>
-      <div class="carousel-item">
-        <img class="d-block w-100" style="height:auto;width: auto;" src="/images/slide-show_3.jpg" alt="Third slide">
+        <a href="/products/Electronics">
+          <img class="d-block w-100" style="height:auto;width: auto;" href="" src="/images/slide-show_1.jpg"
+            alt="Second slide">
+        </a>
       </div>
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -49,7 +54,7 @@
       {{#each values}}
       <div class="col-xs-6 ">
         <a href="/products/{{this}}" style="text-decoration: none; color: black;">
-          <div class="card ml-5 mb-4 " style="width:10rem;height:11rem">
+          <div class="card ml-5 mb-4 zoom " style="width:10rem;height:11rem">
             <img class="card-img-top text-center " style="height: 7rem;width:7rem; margin:auto;"
               src="/images/{{this}}.jpg" alt="Card image cap">
             <div class="card-body pb-3">
@@ -219,8 +224,8 @@
             <p><i class="fas fa-home mr-3"></i>India,Kerela ,680734 </p>
             <p><i class="fas fa-envelope mr-3"></i>richardshaju66@gmial.com</p>
             <p><i class="fas fa-phone mr-3"></i>9495687674</p>
-            <p><i class="fas fa-print mr-3"></i><a href="https://wa.me/qr/VEIUE4TN34DWH1"
-                style="color: #fff;"> Whatsapp </a></p>
+            <p><i class="fas fa-print mr-3"></i><a href="https://wa.me/qr/VEIUE4TN34DWH1" style="color: #fff;"> Whatsapp
+              </a></p>
           </div>
           <!-- Grid column -->
         </div>

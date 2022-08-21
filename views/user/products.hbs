@@ -1,10 +1,19 @@
+<style>
+  .zoom:hover {
+    -ms-transform: scale(1.02);
+    /* IE 9 */
+    -webkit-transform: scale(1.02);
+    /* Safari 3-8 */
+    transform: scale(1.02);
+  }
+</style>
 {{#if laptop}}
 <section class="">
   <div class="  pt-5 mt-5">
     <div class="row">
       {{#each products}}
       <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 pl-4">
-        <div class="card  mb-4 " style="height:18rem;width:25rem">
+        <div class="card zoom mb-4 " style="height:18rem;width:25rem">
           <div class="row">
             <div class="column">
               <img class="card-img-top mr-auto " style="width:auto; height: 120px;  padding-left: 20px;
@@ -12,7 +21,7 @@
             </div>
             <div class="column_2">
               <h5 class="card-title" style="">{{this.Name}}</h5>
-              <h5 class="card-title" style="font-size: 25px;"> ₹{{this.Price}}</h5>
+              <h5 class="card-title" style="font-size: 25px;  "> ₹{{this.Price}}</h5>
             </div>
             <div class="row">
             </div>
@@ -33,11 +42,12 @@
 </section>
 {{else if fashion}}
 <section>
-  <div class="mt-5 ml-5 pt-5">
+  <div class="mt-5 ml-1 mr-1 pt-5">
     <div class="row">
       {{#each products}}
-      <div class="col-6 col-sm-4 col-lg-3">
-        <div class="card" style="">
+      <div class="col-6 col-sm-4 col-lg-3" style="padding-bottom: 1rem;">
+        <div class="card zoom" style="    width: 15rem;
+    height: 30rem;    padding: 30px;">
           <img src="/product-images/{{this._id}}.jpg" alt="Denim Jeans" style="width:10rem">
           <h1 style="font-size: 20px;">{{this.Name}}</h1>
           <p class="price" style=" font-size: 22px;">₹{{this.Price}}</p>
@@ -58,7 +68,7 @@
     <div class="row">
       {{#each products}}
       <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 pl-4">
-        <div class="card  mb-4 " style="height:18rem;width:23rem">
+        <div class="card zoom  mb-4 " style="height:18rem;width:23rem">
           <div class="row">
             <div class="column">
               <img class="card-img-top mr-auto" style="width:auto; height: 9rem;  padding-left: 50px;
@@ -87,7 +97,7 @@
   </div>
 </section>
 {{/if}}
-<footer >
+<footer>
   <!-- Copyright -->
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
     &copy;
