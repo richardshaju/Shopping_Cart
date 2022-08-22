@@ -8,7 +8,6 @@ var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
 var fileUpload = require('express-fileUpload')
 var app = express();
-const port = process.env.PORT || 5000
 var db = require('./config/connection')
 var session = require('express-session')
 process.env.PWD = process.cwd()
