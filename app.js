@@ -1,6 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+require('dotenv').config();
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var hbs = require('express-handlebars')
@@ -11,9 +12,8 @@ var app = express();
 var db = require('./config/connection')
 var session = require('express-session')
 process.env.PWD = process.cwd()
-process.env.PORT || 3000
 app.listen(process.env.PORT || 3000, function(){
-  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+  console.log("Express server listening on port %d in %s mode");
 });
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
